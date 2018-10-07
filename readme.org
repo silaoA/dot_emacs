@@ -8,6 +8,7 @@
 * 前言
   力图编写一个跨系统平台（system-type）和window类型（window-system）的通用
 性配置文件，跨Windows/linux/cygwin，字符界面和图形界面。
+
   C-h v查看system-type变量帮助，值有：
 - 'gnu              ;; 表示gnu Hurd系统
 - 'gnu/linux        ;; 表示gnu/linux系统
@@ -25,7 +26,7 @@
 ** 核心思想
    依照功能模块，将Emacs配置文件分拆成多个部分，按需加载和配置。
    .emacs只是入口，内部定义emacs.d等文件路径并将相关路径加入loadpath。
-   .emacs.d下init.el逐个加载其他配置文件。
+   emacs.d下init.el逐个加载其他配置文件。
 ** 文件存放
    本仓库下.emacs为文件实体，~/.emacs为指向其的链接，Windows用户目录（C:\user
 \<用户名>\AppData\Roaming）下使用快捷方式（.emacs.lnk）无效，需从此处复制。
