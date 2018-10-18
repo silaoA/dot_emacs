@@ -2,6 +2,7 @@
 ;; initialization for cygwin
 ;; copyright @ silaoA<stsilaoa@gmail.com> 2016
 ;;          All rights reserved
+(message "加载init-cygwin.el ...")
 
 (defun setcyg-dir-p (directory)
   "Return DIRECTORY if DIRECTORY is a readable directory, nil otherwise."
@@ -143,5 +144,6 @@ loaded as such.)"
 ;;(setq fakecygpty-program "/usr/local/bin/fakecygpty.exe")
 ;;(setq fakecygpty-qkill-program "/usr/local/bin/qkill.exe")
 
+(message "加载init-cygein.el完成")
 ;; init-cygwin ENDS HERE
 (provide 'init-cygwin)

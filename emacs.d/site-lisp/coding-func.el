@@ -1,18 +1,18 @@
 ;; customed functions for coding
-
+(message "加载coding-func.el ...")
  ;; ============= smart comment-or-uncomment-region
-(defun smart-comment-or-uncomment-region (beg end &optional arg)  
-  (interactive (if (use-region-p)  
-                   (list (region-beginning) (region-end) nil)  
-                 (list (line-beginning-position)  
-                       (line-beginning-position 2))))  
-  (comment-or-uncomment-region beg end arg)  
-)  
+(defun smart-comment-or-uncomment-region (beg end &optional arg)
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end) nil)
+                 (list (line-beginning-position)
+                       (line-beginning-position 2))))
+  (comment-or-uncomment-region beg end arg)
+)
 ;; configuration for smart comment-or-uncomment-region in dot emacs
 ;; (require 'coding-func)
 ;; (global-set-key (kbd "C-c C-q") 'smart-comment-or-uncomment-region)
 
-;; =========  Org-style folding for a `.emacs' (and much more) =========  
+;; =========  Org-style folding for a `.emacs' (and much more) =========
 (defun my-outline-regexp ()
   "Calculate the outline regexp for the current mode."
   (let ((comment-starter (replace-regexp-in-string
@@ -39,7 +39,7 @@
 				 "\\{3\\} \\(.*" org-fontify-whole-heading-line "\\)") )
 		(heading-4-regexp
 		 (concat (substring outline-regexp 0 -1)
-				 "\\{4,\\} \\(.*" org-fontify-whole-heading-line "\\)")) 
+				 "\\{4,\\} \\(.*" org-fontify-whole-heading-line "\\)"))
 		)
 	(font-lock-add-keywords
 	 nil
@@ -48,12 +48,12 @@
 	   (,heading-3-regexp 1 'org-level-3 t)
 	   (,heading-4-regexp 1 'org-level-4 t)))
 	)
-) 
+)
 
 ;; configuration for Org-style folding in dot emacs
-;; (require 'coding-func)	   
+;; (require 'coding-func)
 ;; (add-hook 'outline-minor-mode-hook
-;; 		  'my-outline-minor-mode-hook) 
+;; 		  'my-outline-minor-mode-hook)
 
 ;;  ===  Org-style folding  code ENDS here
 
@@ -79,5 +79,6 @@
   (yank)
   (call-interactively 'indent-region))
 
+(message "加载coding-func.el完毕")
 (provide 'coding-func)
 ;; == coding-func.el ends here!

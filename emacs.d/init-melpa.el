@@ -1,8 +1,9 @@
-;; =================== .emacs.d/init-(m)elpa.el =====================
+;; =================== emacs.d/init-(m)elpa.el =====================
 ;; initialization for site-lisp package
 ;; copyright @ silaoA<stsilaoa@gmail.com> 2016
 ;;          All rights reserved
 
+(message "加载init-melpa.el ...")
 (require 'package) ;; You might already have this line
 (setq-local local-elpa-mirror-dir (concat emacsd "/local-melpa/"))
 (setq package-archives  '(
@@ -18,8 +19,6 @@
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
 (add-to-list 'package-archives '("ec-gnu" . "http://elpa.emacs-china.com/gnu/") ) )
-;; ==  cl - common lisp extension ==
-(require 'cl)
 ;; for package archive & install
 (setq package-user-dir (concat emacsd "/melpa"))
 (package-initialize) ;; You might already have this line
@@ -27,6 +26,7 @@
 
 ;; =======  through package.el install ==========
 ;; == auto-complete ==
+(message "setting up auto-complete ...")
 (require 'auto-complete)
 (require 'auto-complete-config)
 ;;(add-to-list 'ac-dictionary-directories (concat ac-dir "/dict"))
@@ -35,8 +35,16 @@
 ;;(defun open-ac-dir()
 ;;  (interactive)
 ;;  (find-file ac-dir))
+(defun ac-hide-help ()
+  (interactive)
+  (setq ac-use-quick-help nil))
+
+(defun ac-show-help ()
+  (interactive)
+  (setq ac-use-quick-help t))
 
 ;; ===== smex ====
+(message "setting up smex ...")
 (require 'smex)   ;; 无其他依赖
 (smex-initialize) ;; Can be omitted. This might cause a (minimal) delay
 (global-set-key (kbd "M-x") 'smex)
@@ -47,6 +55,7 @@
 ;; === sr-speedbar ===
 (when (display-graphic-p)
   ;; GUI version (or (eq window-system 'w32) (eq window-system 'x))
+  (message "GUI version Emacs, setting up sr-speedbar ...")
   (require 'sr-speedbar)  ;; 无其他依赖
   (setq sr-speedbar-right-side nil)
   (setq sr-speedbar-width 20)
@@ -59,6 +68,7 @@
 ;; === tabbar ===
 (when (display-graphic-p)
   ;; GUI version (or (eq window-system 'w32) (eq window-system 'x))
+  (message "GUI version Emacs, setting up smex ...")
   (require 'tabbar)
   (setq tabbar-use-images nil)
   ;; 设置默认主题: 字体, 背景和前景颜色，大小
@@ -112,30 +122,54 @@
 ;; stupid
 
 ;; == python-mode.el ==
-;; (require 'python-mode)
-;; (autoload 'python-mode "python-mode" "Python Mode." t)
+(message "setting up python-mode ...")
+(setq py-install-directory (concat package-user-dir "/python-mode-20181008.1836"))
+(add-to-list 'load-path py-install-directory)
+(require 'python-mode)
+;; by default, the function 'python-mode is associated with
+;; the package python.el. The following changes that to python-mode.el
+(autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
-;; (add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
-(add-hook 'python-mode-hook (lambda ()
-	;; (guess-style-guess-tab-width)
-	(setq-default indent-tabs-mode nil) ;;defined in C source code
-	(setq-default tab-width 4)
-	(setq-default py-indent-tabs-mode t)
-	(set-variable 'python-indent-offset tab-width)
-	;; (set-variable 'python-indent-guess-indent-offset nil)
-	(add-to-list 'write-file-functions 'delete-trailing-whitespace)
+(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
+(add-to-list 'interpreter-mode-alist '("ipython3" . python-mode))
+;; python-shell-interpreter是python.el中的变量，不是python-mode.el
+;; python-mode.el指定py-python-command、py-python3-command、py-ipython-command
+;; 以及对应的-args参数
+;; python-mode下python文件的shebang将被C-c C-c选作运行buffer的解释器，优先级
+;; 高于py-shell-name，设置py-force-py-shell-name-p则忽略shebang
+;;(setq python-shell-interpreter "ipython3"
+;;	  python-shell-interpreter-args "--simple-prompt -i")
+(setq python-shell-interpreter "python3")
+;; (setq py-python3-command "python3")
+;; (setq py-shell-name 'py-python3-command)
+;; (setq py-python3-command-args "-i")
+(defun setup-python-mode-hook()
+  "python-mode hook setu for `add-hook`"
+  (interactive)
+  ;;(guess-style-guess-tab-width)
+  (setq-default indent-tabs-mode t) ;;defined in C source code
+  (setq-default tab-width 4)
+  (setq-default py-indent-tabs-mode t)
+;;  (set-variable 'python-indent-offset 4)
+  ;; (set-variable 'python-indent-guess-indent-offset nil)
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace)
   ;;(global-set-key [remap py-forward-block] 'smart-comment-or-uncomment-region)
-))
+)
+(add-hook 'python-mode-hook 'setup-python-mode-hook)
 
 ;; == emacs-jedi == require EPC and auto-complete
-;;(setq jedi-dir (concat site-lisp-dir "/emacs-jedi"))
-;;(add-to-list 'load-path jedi-dir)
-;;(add-hook 'python-mode-hook 'jedi:setup)
-;;(autoload 'jedi:setup "jedi" nil t)
-;;(setq jedi:complete-on-dot t)            ; optional
-;;(setq jedi:setup-keys t)                 ; recommended keybinds
-;; (setq jedi:key-complete (kbd "C tab"))
+(message "setting up emacs-jedi ...")
+(setq jedi-dir (concat package-user-dir "/jedi-20160425.2156"))
+(setq jedi-core-dir (concat package-user-dir "/jedi-core-20170121.610"))
+;; (setq jedi-dir (concat site-lisp-dir "/emacs-jedi"))
+;; (add-to-list 'load-path jedi-dir)
+(setq jedi:server-command (list "python3" (concat jedi-core-dir "/jediepcserver.py")))
+(add-hook 'python-mode-hook 'jedi:setup)
+(autoload 'jedi:setup "jedi" nil t)
+(setq jedi:complete-on-dot t)            ; optional
+(setq jedi:setup-keys t)                 ; recommended keybinds
+(setq jedi:key-complete (kbd "C tab"))
 
 ;; ===== py-autopep8 =======
 ;; (require 'py-autopep8)
@@ -166,5 +200,6 @@
 ;;			(auto-complete-mode -1)
 ;;))
 
+(message "加载init-mepla.el完成")
 ;; init-melpa ENDS HERE
 (provide 'init-melpa)

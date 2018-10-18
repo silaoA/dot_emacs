@@ -8,6 +8,8 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
+
+(message "加载.emacs ...")
 (package-initialize)
 
 (put 'upcase-region 'disabled nil)
@@ -17,7 +19,7 @@
 (when (eq system-type 'gnu/linux)
  ;; (defvar sync-dir "/media/silaoa/DATA/BaiduSync") ;; for gnu linux
  (defvar sync-dir "/mnt/e/BaiduSync") ;; for WSL
- )
+)
 (when (eq system-type 'cygwin)  ;; for cygwin
   (defvar sync-dir "/e/BaiduSync")
 )
@@ -26,3 +28,4 @@
 (setq initel (concat emacsd "/init.el"))
 
 (load-file  initel)   ;; load
+;; .emacs ENDS HERE

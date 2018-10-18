@@ -1,7 +1,7 @@
 ;;; init-python --- python
 ;;; Commentary:
 ;;; Code:
-
+(message "加载init-python.el ...")
 ;; list packages for python
 (defvar python-packages
   '(elpy
@@ -59,5 +59,6 @@
 ;; (require 'lsp-ui)
 ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 ;; ;; ------------------------------------------------
+(message "加载init-python.el完成")
 (provide 'init-python)
 ;;; init-python.el ends here

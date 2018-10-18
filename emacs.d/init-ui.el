@@ -1,11 +1,13 @@
-;;=================== .emacs.d/init-ui =========================
+;;=================== emacs.d/init-ui =======================
 ;; init for emacs UI
 ;; copyright @ silaoA<stsilaoa@gmail.com> 2016
 ;;          All rights reserved
 
+(message "加载init-ui.el ...")
 ;; frame size 窗口大小
 (setq default-frame-alist '((width . 84) (height . 32) (menu-bar-lines . 1)))
 (setq default-fill-column 84);;把 fill-column 设为 84， 这样的文字更好读
+(toggle-truncate-lines 1)    ;;正数折行，负数不折行
 ;; make the title infomation more useful
 (setq frame-title-format
   (list "GNU Emacs " emacs-version "@" system-name "   " '(buffer-file-name "%f" "%b")))
@@ -37,7 +39,7 @@
 
 (global-font-lock-mode t) ;; 语法高亮
 (setq font-lock-maximum-decoration t)
-;;(global-visual-line-mode 1) ; line wrapping 卷行
+(global-visual-line-mode 1) ; line wrapping 卷行
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -102,5 +104,6 @@
 ;;(add-to-list custom-theme-load-path 'color-theme-solarized-dir)
 ;;(load-theme 'solarized t)
 
+(message "加载init-ui.el完成")
 ;; init-ui ENDS HERE
 (provide 'init-ui)

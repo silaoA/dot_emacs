@@ -1,14 +1,9 @@
-;; =================== .emacs.d/init-site-lisp.el =====================
+;; ================= emacs.d/init-site-lisp.el ===================
 ;; initialization for site-lisp package
 ;; copyright @ silaoA<stsilaoa@gmail.com> 2016
 ;;          All rights reserved
 
-;; == auto-complete ==
-;;(setq-local ac-dir (concat site-lisp-dir "/auto-complete"))
-;;(add-to-list 'load-path ac-dir)
-;; ==smex ==
-;;(setq-local smex-dir (concat site-lisp-dir "/smex"))
-;;(add-to-list 'load-path smex-dir)
+(message "加载init-site-lisp.el ...")
 
 ;; == unicad ==
 (require 'unicad)
@@ -31,6 +26,14 @@
 (set-face-background 'indent-guide-face "dimgray")
 ;; (setq indent-guide-char ":")
 
+;; ==== popwin.el ===
+(if (> emacs-major-version 22)
+  (progn
+	(require 'popwin)
+	(popwin-mode 1)  ;; 启用popwin
+  )   ;;progn 类似于c/java的花括号，将多条语句合成块，when/unless隐式progn
+  (message "emacs-majar-version <= 22, ignore popwin")
+)
 ;; == hideshow visible ==
 (require 'hideshowvis)
 (autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
@@ -53,5 +56,6 @@
 ;; (smart-tabs-advice py-newline-and-indent py-indent-offset)
 ;; (smart-tabs-advice py-indent-region py-indent-offset)
 
+(message "加载init-site-lisp.el完成")
 ;; init-site-lisp ENDS HERE
 (provide 'init-site-lisp)
