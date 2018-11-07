@@ -22,7 +22,9 @@
 
 (global-linum-mode t)
 (column-number-mode t)   ;;列号
-(tool-bar-mode -1)            ;;工具栏
+(when (display-graphic-p)   ;; GUI version
+  (tool-bar-mode -1)            ;;工具栏
+)
 ;; (display-time-mode 1)         ;;启用时间显示设置，在minibuffer上面的那个杠上
 ;; (setq display-time-24hr-format t) ;;时间使用24小时制
 ;;(format-time-string "%Y-%m-%d %H:%M:%S")
