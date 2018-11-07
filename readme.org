@@ -21,6 +21,7 @@
 - 'x                ;; x图形界面
 - 'w32              ;; Windows图形界面
 - 'pc               ;; dos字符界面
+
   text terminal/GUI 版本emacs判断，函数display-graohic-p可以判断。
   在配置文件中，就是依据system-type、display-graphic-p、window-system做条件判断，来决定加载哪些特性。
 
