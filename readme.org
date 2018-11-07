@@ -4,7 +4,7 @@
 
 修改历史：
 2018-10-07 首次编写。
-
+2018-11-7  新增milkypostman/powerline配置，试验emacs-powerline放弃
 * 前言
   力图编写一个跨系统平台（system-type）和window类型（window-system）的通用
 性配置文件，跨Windows/linux/cygwin，字符界面和图形界面。
@@ -16,11 +16,13 @@
 - 'windows-nt       ;; windows w32
 - 'cygwin           ;; cygwin
 
-  C-h v查看window-systemz变量帮助，值有：
+  C-h v查看window-system变量帮助，值有：
 - nil               ;; 字符界面，termcap
 - 'x                ;; x图形界面
 - 'w32              ;; Windows图形界面
 - 'pc               ;; dos字符界面
+  text terminal/GUI 版本emacs判断，函数display-graohic-p可以判断。
+  在配置文件中，就是依据system-type、display-graphic-p、window-system做条件判断，来决定加载哪些特性。
 
 * 文件组织
 ** 核心思想
