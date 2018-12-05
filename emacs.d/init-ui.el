@@ -5,12 +5,19 @@
 
 (message "加载init-ui.el ...")
 ;; frame size 窗口大小
-(setq default-frame-alist '((width . 84) (height . 32) (menu-bar-lines . 1)))
-(setq default-fill-column 84);;把 fill-column 设为 84， 这样的文字更好读
+(when (display-graphic-p)   ;; GUI version
+  (setq default-frame-alist '((width . 84) (height . 32) (menu-bar-lines . 1)))
+  (setq default-fill-column 84);;把 fill-column 设为 84， 这样的文字更好读
+)
 (toggle-truncate-lines 1)    ;;正数折行，负数不折行
 ;; make the title infomation more useful
 (setq frame-title-format
-  (list "GNU Emacs " emacs-version "@" system-name "   " '(buffer-file-name "%f" "%b")))
+;; (list "GNU Emacs " emacs-version "@" system-name "   " '(buffer-file-name "%f" "%b"))
+(list "GNU " invocation-name " " emacs-version "@" system-name " " '(buffer-file-name "%f"))
+  ;;window-system 和 system-type 暂无法加载出来
+  ;; (list "GNU Emacs " emacs-version "(" run-os "." run-x ")")
+)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -55,7 +62,7 @@
  '(linum ((t (:background "SystemWindowFrame" :weight normal :height 0.9 :width normal)))))
 
 ;; ==== font for English and 中文汉字 ====
-(when (eq system-type 'windows-nt)
+(when (or (eq system-type 'windows-nt) (eq system-type 'cygwin) )
 	(when (display-graphic-p)   ;; GUI version
 	;; Setting English Font
 	 (set-face-attribute 'default nil :font "Consolas 11")
@@ -66,7 +73,6 @@
 	 )
 	)
 )
-         ;; charset (font-spec :family "黑体" :size 15)) )  )
 
 (setq ring-bell-function (lambda () t))  ;; 关闭屏幕闪动
 (global-hl-line-mode 1) ;; highlight cursor line高亮当前行

@@ -5,6 +5,8 @@
 修改历史：
 2018-10-07 首次编写。
 2018-11-7  新增milkypostman/powerline配置，试验emacs-powerline放弃
+2018-12-5  修正cygwin w32界面版emacs粘贴外部字符乱码设置，修正python-mode下C-c C-q绑定冲突
+
 * 前言
   力图编写一个跨系统平台（system-type）和window类型（window-system）的通用
 性配置文件，跨Windows/linux/cygwin，字符界面和图形界面。
@@ -37,5 +39,8 @@
 其他init文件，按照ui、自定义功能函数、字符编码等杂项、customize配置、编程语言
 等多个模块组织。
    melpa为package-install-package下载扩展包的路径，扩展包的配置项写在init-melpa
-中，如某个扩展包配置语句k过多也可独立成单个文件。
-   init-xx.el可能加载调用site-lisp中定义的符号，如函数变量等。
+中，如某个扩展包配置语句过多也可独立成单个文件。
+   init-xx.el可能加载调用site-lisp中的文件和引用函数变量等，site-lisp中的文件由其他处下载而来，如是多个文件放在子目录中，则需在init-site-lisp.el将子目录加入load-path。
+* TODO
+** python的配置
+   现在存在emacs中自带的python.el提供python-mode，和elpa中python-mode.el提供的python-mode，存在冲突并且相当不好用。

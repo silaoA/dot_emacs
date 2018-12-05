@@ -13,15 +13,23 @@
 (package-initialize)
 
 (put 'upcase-region 'disabled nil)
+(defvar run-os nil)
+(defvar run-x nil)
 (when (eq system-type 'windows-nt)
   (defvar sync-dir "e:/BaiduSync")
+  (defvar run-os "Windows")
+  (when (display-graphic-p) (defvar run-x "w32"))
 )
 (when (eq system-type 'gnu/linux)
  ;; (defvar sync-dir "/media/silaoa/DATA/BaiduSync") ;; for gnu linux
- (defvar sync-dir "/mnt/e/BaiduSync") ;; for WSL
+  (defvar sync-dir "/mnt/e/BaiduSync") ;; for WSL
+  (defvar run-os "Linux")
+  (when (display-graphic-p) (defvar run-x "x"))
 )
 (when (eq system-type 'cygwin)  ;; for cygwin
   (defvar sync-dir "/e/BaiduSync")
+  (defvar run-os "Cygwin")
+  (when (display-graphic-p) (defvar run-x "w32"))
 )
 (setq emacsd (concat sync-dir "/misc-back/Emacs-back/emacs.d") )
 (setq custom-file (concat emacsd "/init-customization.el"))

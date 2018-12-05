@@ -151,6 +151,8 @@
   (setq-default indent-tabs-mode t) ;;defined in C source code
   (setq-default tab-width 4)
   (setq-default py-indent-tabs-mode t)
+  (local-unset-key (kbd "C-c C-q")) ;;避免和smart-comment冲突
+  ;; (local-set-key (kbd "C-c C-q") smart-comment-or-uncomment-region)
 ;;  (set-variable 'python-indent-offset 4)
   ;; (set-variable 'python-indent-guess-indent-offset nil)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)

@@ -38,6 +38,15 @@
     (set-next-selection-coding-system 'gbk-dos)
     (set-clipboard-coding-system 'gbk-dos)
   )
+
+  (when  (eq system-type 'cygwin)
+    (when (display-graphic-p)
+   ;; (eq window-system 'w32) ;; (when (display-graphic-p) )
+   ;; (set-file-name-coding-system 'gbk-dos)
+    (set-selection-coding-system 'gbk-unix)
+	(set-next-selection-coding-system 'gbk-unix)
+	(set-clipboard-coding-system 'gbk-unix)
+    ) )
 ;;)
 
 ;; === cl cl-lib (common lisp)包，Emacs Lisp推荐cl-lib，因cl过时
@@ -105,7 +114,7 @@
 (require 'dired)
 (setq dired-recursive-deletes (quote top))  ;; allow delete nonempty directory
 (setq dired-recursive-copies (quote always))  ;; allow copy recursively
-(defun dired-up-dir () 
+(defun dired-up-dir ()
   "get parent directory in dired mode"
   (interactive)
   (find-alternate-file "..")
@@ -134,8 +143,10 @@
 (setq ido-default-file-method 'selected-window)
 ;; use current pane for newly switched buffer
 (setq ido-default-buffer-method 'selected-window)
-;; stop ido from suggesting when naming new file
+;; stop ido from suggesting when naming,creating new file
 (define-key (cdr ido-minor-mode-map-entry) [remap write-file] nil)
+(define-key (cdr ido-minor-mode-map-entry) [remap dired-create-files] nil)
+(define-key (cdr ido-minor-mode-map-entry) [remap dired-create-directory] nil)
 (setq
  ido-ignore-buffers  '("\\` "  "^\*Back" ".*Completions\*" "^\*Ido" "^\*trace"
 				   "^\*compilation" "^\*GTAGS" "^session\.*")
